@@ -1,0 +1,197 @@
+/*
+    Created on : Feb 12, 2016, 11:16:38 PM
+    Author     : snake
+*/
+
+/*----------------------------------------------------------------------------*/
+/*                              Body                                          */
+/*----------------------------------------------------------------------------*/
+
+body {
+   margin: 0;
+   padding: 0;
+   background-color: rgb(230, 230, 230);
+   font-family: sans-serif;
+   overflow: auto;
+}
+
+h1 {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: medium;
+}
+
+p {
+    margin: 5px;
+    padding: 2px;
+}
+
+h2 {
+    text-decoration-style: double;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0px;
+}
+
+hr {
+    color: #cccccc;
+}
+
+/* ----------  Error messages --------------*/
+
+p.error {
+    color: inherit;
+    font-style: italic;
+}
+
+p.error:before {
+    font-style: normal;
+    content: "Error!";
+    color: red;
+    font-weight: bold;
+    text-align: left;
+    margin-right: 20px;
+}
+
+label {
+    float: left;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*                              Footer                                        */
+/*----------------------------------------------------------------------------*/
+
+
+div.footer {
+    padding: 2px;
+    overflow: hidden;
+    background-color: rgb(50, 50, 50);
+    color: rgb(200, 200, 200);
+    width: 100%;
+    text-align: center;
+    position: fixed;
+
+}
+
+/*----------------------------------------------------------------------------*/
+/*                                  Main panel                                */
+/*----------------------------------------------------------------------------*/
+
+
+div.main {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: rgb(240, 240, 240);
+    text-align: justify;
+    padding: 20px 20px 20px 20px;
+    margin: 20px auto;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/*                              Inputs                                        */
+/*----------------------------------------------------------------------------*/
+
+
+input[type=text], input[type=password]{
+    width: 100%;
+    padding: 1px 1px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: rgb(100, 140, 250);
+    border: none;
+    color: white;
+    padding: -1px 0px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    height: 24px;
+}
+
+input[type=submit]:hover {
+    background-color: rgb(80, 110, 230);
+}
+
+/* ------------- TABLES --------------*/
+
+table {
+    border-collapse: collapse;
+    border-color: #bbbbbb;
+    width: 100%;
+}
+
+caption {
+    text-decoration-style: double;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+th {
+    padding: 8px;
+    text-align: left;
+    background-color: rgb(100, 140, 250);
+    color: white;
+}
+
+
+td {
+    padding: 5px;
+    text-align: left;
+    border-color: #cccccc;
+}
+
+
+tr:hover{background-color:#f7f7f7}
+
+tr.last:hover {
+    background-color: transparent;
+}
+
+tr.last {
+    border: none;
+}
+
+td.last {
+    border: none;
+}
+
+
+/* ------------------- LINKS ---------------------- */
+
+a.dep:link, a.dep:visited, a.dep:active {
+    color: black;
+    text-decoration: none;
+}
+
+a.dep:hover {
+    color: rgb(50,50,50);
+    text-decoration: underline;
+    font-style: italic;
+}
+
+a.button:link, a.button:visited {
+    background-color: rgb(100, 140, 250);
+    border: none;
+    color: white;
+    padding: 2px 3px;
+    display:block;
+    width: 50px;
+    height: 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 16px;
+    float: left;
+    text-align: center;
+}
+
+a.button:hover {
+    background-color: rgb(80, 110, 230);
+}

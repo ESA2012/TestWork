@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0"
+         metadata-complete="true">
+    <display-name>Test Work</display-name>
+
+    <servlet>
+        <servlet-name>deplist</servlet-name>
+        <servlet-class>esa2012.servlets.DepListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deplist</servlet-name>
+        <url-pattern>/deplist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>depedit</servlet-name>
+        <servlet-class>esa2012.servlets.DepEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>depedit</servlet-name>
+        <url-pattern>/depedit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>emplist</servlet-name>
+        <servlet-class>esa2012.servlets.EmpListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>emplist</servlet-name>
+        <url-pattern>/emplist</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>empedit</servlet-name>
+        <servlet-class>esa2012.servlets.EmpEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>empedit</servlet-name>
+        <url-pattern>/empedit</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <location>/pages/errorpage.jsp</location>
+    </error-page>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>/jsp/*</url-pattern>
+            <el-ignored>false</el-ignored>
+        </jsp-property-group>
+    </jsp-config>
+
+    <welcome-file-list>
+        <welcome-file>deplist</welcome-file>
+    </welcome-file-list>
+
+    <resource-ref>
+        <description>MySQL Connection</description>
+        <res-ref-name>jdbc/testwork</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+</web-app>
