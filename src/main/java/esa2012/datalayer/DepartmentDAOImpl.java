@@ -8,14 +8,13 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by snake on 31.05.16.
- */
+
+
 public class DepartmentDAOImpl implements DepartmentDAO {
 
     protected Connection getConnection() throws DAOException {
         try {
-            return  DBConnections.getConnection();
+            return  DBService.getInstance().getConnection();
         } catch (Exception e) {
             throw new DAOException(e);
         }
@@ -25,7 +24,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     @Override
     public List<Department> getAll(boolean includeEmployees) throws DAOException {
         String sql_str = "SELECT * FROM dep ORDER BY dep_id";
-        List<Department> result = null;
+        List<Department> result;
         try (Connection connection = getConnection()){
             PreparedStatement statement = connection.prepareStatement(sql_str);
             ResultSet resultSet = statement.executeQuery();
@@ -34,7 +33,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
                 Department department = getDepartment(resultSet, includeEmployees);
                 result.add(department);
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -46,12 +45,12 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         String sql_str = "INSERT INTO dep VALUES (DEFAULT, '"+department.getDepName()+"')";
         try (Connection connection = getConnection()){
             Statement statement = connection.createStatement();
-            int i = statement.executeUpdate(sql_str, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate(sql_str, Statement.RETURN_GENERATED_KEYS);
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 department.setId(resultSet.getInt(1));
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -63,8 +62,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql_str);
             statement.setInt(1, id);
-            int i = statement.executeUpdate();
-            DBUtils.close(statement, null);
+            statement.executeUpdate();
+            DBService.close(statement, null);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -78,7 +77,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             statement.setString(1, department.getDepName());
             statement.setInt(2, department.getId());
             statement.executeUpdate();
-            DBUtils.close(statement, null);
+            DBService.close(statement, null);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -95,7 +94,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             if (resultSet.next()) {
                 department = getDepartment(resultSet, includeEmployees);
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

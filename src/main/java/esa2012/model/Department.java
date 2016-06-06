@@ -11,10 +11,6 @@ public class Department implements Serializable {
     public Department() {
     }
 
-    public Department(String depName) {
-        this.depName = depName;
-    }
-
     public String getDepName() {
         return depName;
     }

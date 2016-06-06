@@ -1,14 +1,14 @@
 package esa2012.service.datatransport;
 
+import esa2012.model.Department;
 import esa2012.service.customchecks.NotInDepartments;
 import net.sf.oval.constraint.*;
 
 import java.io.Serializable;
 
-/**
- * Created by snake on 02.06.16.
- */
-public class DepartmentDTO implements Serializable{
+
+
+public class DepartmentForm implements Serializable{
     private Integer id;
 
     @NotBlank(message = "Departmen name not specified")
@@ -16,15 +16,23 @@ public class DepartmentDTO implements Serializable{
     @NotInDepartments(message = "Department with the same name already exists")
     private String depName;
 
-    public DepartmentDTO(String depName) {
-        this.depName = depName;
+    public DepartmentForm(Department department) {
+        this.depName = department.getDepName();
+        this.id = department.getId();
+    }
+
+    public Department buildDepartment() {
+        Department department = new Department();
+        department.setId(this.id);
+        department.setDepName(this.depName);
+        return department;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public DepartmentDTO() {
+    public DepartmentForm() {
     }
 
     public void setId(Integer id) {

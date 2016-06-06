@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="depobj" class="esa2012.service.datatransport.DepartmentDTO" scope="request"/>
-<jsp:setProperty name="depobj" property="*"/>
-
 <%--
   Created by IntelliJ IDEA.
   User: snake
@@ -15,10 +12,11 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/custom.css">
+  <title>Test Work</title>
 </head>
 <body>
 <c:choose>
-  <c:when test="${depobj.id == null}">
+  <c:when test="${requestScope.depobj.id == null}">
     <c:set var="action" value="add"/>
     <c:set var="formlabel" value="Add new department"/>
     <c:set var="buttontext" value="Add"/>
@@ -36,9 +34,9 @@
     </h2>
     <hr>
     <form method="post" action="${pageContext.request.contextPath}/depedit" name="depobj">
-      <input type="hidden" name="dep_id" value="${depobj.id}">
+      <input type="hidden" name="dep_id" value="${requestScope.depobj.id}">
       <label for="dep_name">Name:</label>
-      <input id="dep_name" type="text" name="dep_name" value="${depobj.depName}">
+      <input id="dep_name" type="text" name="dep_name" value="${requestScope.depobj.depName}">
 
       <div style="height: 35px;">
         <hr>

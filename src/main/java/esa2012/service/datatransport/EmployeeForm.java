@@ -1,14 +1,15 @@
 package esa2012.service.datatransport;
 
+import esa2012.model.Employee;
+import esa2012.service.Service;
 import esa2012.service.customchecks.NotInEmails;
 import net.sf.oval.constraint.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-/**
- * Created by snake on 02.06.16.
- */
-public class EmployeeDTO implements Serializable {
+
+public class EmployeeForm implements Serializable {
     private Integer id;
 
     @NotBlank(message = "Employee's first name not valid")
@@ -34,7 +35,39 @@ public class EmployeeDTO implements Serializable {
 
     private Integer depId;
 
-    public EmployeeDTO() {
+    public EmployeeForm() {
+    }
+
+    public EmployeeForm(Employee employee) {
+        this.id = employee.getId();
+        this.depId = employee.getDepId();
+        this.firstName = employee.getFirstName();
+        this.lastName = employee.getLastName();
+        this.position = employee.getPosition();
+        if (employee.getSalary()!=null) {
+            this.salary = employee.getSalary().toString();
+        }
+        if (employee.getDateOfBirth()!=null) {
+            this.dateOfBirth = Service.formatDate(employee.getDateOfBirth());
+        }
+        this.email = employee.getEmail();
+    }
+
+    public Employee buildEmployee() {
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setDepId(depId);
+        employee.setFirstName(firstName);
+        employee.setLastName(lastName);
+        employee.setEmail(email);
+        employee.setPosition(position);
+        if (salary!=null && !"".equals(salary)) {
+            employee.setSalary(new BigDecimal(salary));
+        }
+        if (dateOfBirth!= null && !"".equals(dateOfBirth)) {
+            employee.setDateOfBirth(Service.parseDate(dateOfBirth));
+        }
+        return employee;
     }
 
     public Integer getId() {

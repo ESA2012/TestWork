@@ -9,14 +9,12 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by snake on 31.05.16.
- */
+
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     protected Connection getConnection() throws DAOException {
         try {
-            return  DBConnections.getConnection();
+            return  DBService.getInstance().getConnection();
         } catch (Exception e) {
             throw new DAOException(e);
         }
@@ -40,7 +38,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             if (resultSet.next()) {
                 employee.setId(resultSet.getInt(1));
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -53,7 +51,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             PreparedStatement statement = connection.prepareStatement(sql_str);
             statement.setInt(1, id);
             statement.executeUpdate();
-            DBUtils.close(statement, null);
+            DBService.close(statement, null);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -69,7 +67,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 "emp_post = ?, " +
                 "emp_salary = ? " +
                 "WHERE emp_id = ?";
-
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql_str);
             statement.setInt(8, employee.getId());
@@ -82,7 +79,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             statement.setString(6, employee.getPosition());
             statement.setBigDecimal(7, employee.getSalary());
             statement.executeUpdate();
-            DBUtils.close(statement, null);
+            DBService.close(statement, null);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -107,7 +104,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 Employee empl = getEmployee(resultSet);
                 result.add(empl);
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -126,7 +123,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             if (resultSet.next()) {
                 empl = getEmployee(resultSet);
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -145,7 +142,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             while (resultSet.next()) {
                 result.add(resultSet.getString(1));
             }
-            DBUtils.close(statement, resultSet);
+            DBService.close(statement, resultSet);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

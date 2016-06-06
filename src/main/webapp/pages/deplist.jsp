@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Test Work</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/custom.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dialog.css">
@@ -21,7 +21,7 @@
     <th width="125px"></th>
   </tr>
     <c:set var="num" value="0"/>
-    <c:forEach var="depobj" items="${deplist}">
+    <c:forEach var="depobj" items="${requestScope.deplist}">
       <tr>
         <td>${num = num + 1}</td>
         <td>${depobj.id}</td>

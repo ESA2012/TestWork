@@ -1,6 +1,7 @@
 package esa2012.service.customchecks;
 
-import esa2012.service.datatransport.DepartmentDTO;
+import esa2012.model.Department;
+import esa2012.service.datatransport.DepartmentForm;
 import esa2012.service.Service;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
@@ -16,15 +17,15 @@ public class NotInDepartmentsCheck extends AbstractAnnotationCheck<NotInDepartme
 
     public boolean isSatisfied(Object validatedObject, Object valueToValidate, OValContext context, Validator validator)
     {
-        if (!(validatedObject instanceof DepartmentDTO)) return false;
+        if (!(validatedObject instanceof DepartmentForm)) return false;
 
         if (valueToValidate == null) return true;
 
-        List<DepartmentDTO> employeeDTOs = Service.INSTANCE.getDepartments();
+        List<Department> employeeDTOs = Service.INSTANCE.getDepartments();
 
-        List<String> strings = employeeDTOs.stream().map(DepartmentDTO::getDepName).collect(Collectors.toList());
+        List<String> strings = employeeDTOs.stream().map(Department::getDepName).collect(Collectors.toList());
 
-        return !strings.contains(((DepartmentDTO)validatedObject).getDepName());
+        return !strings.contains(((DepartmentForm)validatedObject).getDepName());
 
     }
 

@@ -1,6 +1,6 @@
 package esa2012.servlets;
 
-import esa2012.service.datatransport.DepartmentDTO;
+import esa2012.service.datatransport.DepartmentForm;
 import esa2012.service.datatransport.ErrorMessages;
 import esa2012.service.Service;
 
@@ -27,7 +27,7 @@ public class DepEditServlet extends HttpServlet {
 
         String url = "/deplist";
 
-        DepartmentDTO depObj = buildObject(req);
+        DepartmentForm depObj = getFormData(req);
 
         ErrorMessages messages = service.validate(depObj);
         if (messages.hasErrors()) {
@@ -39,10 +39,10 @@ public class DepEditServlet extends HttpServlet {
         }
 
         if (insert) {
-            service.addDepartment(depObj);
+            service.addDepartment(depObj.buildDepartment());
         }
         if (update) {
-            service.updateDepartment(depObj);
+            service.updateDepartment(depObj.buildDepartment());
         }
 
         req.getRequestDispatcher(resp.encodeURL(url)).forward(req, resp);
@@ -50,15 +50,15 @@ public class DepEditServlet extends HttpServlet {
     }
 
 
-    private DepartmentDTO buildObject(HttpServletRequest request) {
-        DepartmentDTO departmentDTO = new DepartmentDTO();
+    private DepartmentForm getFormData(HttpServletRequest request) {
+        DepartmentForm departmentForm = new DepartmentForm();
 
         if (!request.getParameter("dep_id").equals("")) {
-            departmentDTO.setId(Integer.valueOf(request.getParameter("dep_id")));
+            departmentForm.setId(Integer.valueOf(request.getParameter("dep_id")));
         }
 
-        departmentDTO.setDepName(request.getParameter("dep_name"));
-        return departmentDTO;
+        departmentForm.setDepName(request.getParameter("dep_name"));
+        return departmentForm;
     }
 
 

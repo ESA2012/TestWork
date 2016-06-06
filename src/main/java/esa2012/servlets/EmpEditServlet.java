@@ -1,6 +1,6 @@
 package esa2012.servlets;
 
-import esa2012.service.datatransport.EmployeeDTO;
+import esa2012.service.datatransport.EmployeeForm;
 import esa2012.service.datatransport.ErrorMessages;
 import esa2012.service.Service;
 
@@ -20,7 +20,6 @@ public class EmpEditServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
 
-//        Service service = (Service)getServletContext().getAttribute("service");
         Service service = Service.INSTANCE;
 
         String url = "emplist";
@@ -35,7 +34,7 @@ public class EmpEditServlet extends HttpServlet {
         boolean update = req.getParameter("upd")!=null;
         boolean insert = req.getParameter("add")!=null;
 
-        EmployeeDTO empObj = buildObject(req);
+        EmployeeForm empObj = getFormData(req);
 
 
         ErrorMessages messages = service.validate(empObj);
@@ -47,25 +46,27 @@ public class EmpEditServlet extends HttpServlet {
             url = "/pages/empedit.jsp";
         }
 
-
         if (insert) {
-            service.addEmployee(empObj);
+            service.addEmployee(empObj.buildEmployee());
         }
         if (update) {
-            service.updateEmployee(empObj);
+            service.updateEmployee(empObj.buildEmployee());
         }
 
         req.getRequestDispatcher(url).forward(req, res);
     }
 
 
-    private EmployeeDTO buildObject(HttpServletRequest req) {
-        EmployeeDTO newemp = new EmployeeDTO();
+    private EmployeeForm getFormData(HttpServletRequest req) {
+        EmployeeForm newemp = new EmployeeForm();
         String id = req.getParameter("emp_id");
         if (id!=null && !"".equals(id)) {
             newemp.setId(Integer.valueOf(id));
         }
-        newemp.setDepId(Integer.valueOf(req.getParameter("dep_id")));
+        String depid = req.getParameter("dep_id");
+        if (depid!=null && !"".equals(depid)) {
+            newemp.setDepId(Integer.valueOf(depid));
+        }
         newemp.setFirstName(req.getParameter("emp_firstname"));
         newemp.setLastName(req.getParameter("emp_lastname"));
         newemp.setEmail(req.getParameter("emp_email"));

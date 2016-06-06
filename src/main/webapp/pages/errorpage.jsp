@@ -12,7 +12,7 @@
 
 <html>
 <head>
-    <title></title>
+    <title>Test Work</title>
     <link href="<c:url value="/css/custom.css"/>" rel="stylesheet" />
 </head>
 <body>

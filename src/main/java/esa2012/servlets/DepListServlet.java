@@ -1,7 +1,6 @@
 package esa2012.servlets;
 
-import esa2012.datalayer.DBConnections;
-import esa2012.datalayer.DBUtils;
+import esa2012.datalayer.DBService;
 import esa2012.service.Service;
 
 import javax.servlet.ServletConfig;
@@ -67,9 +66,9 @@ public class DepListServlet extends HttpServlet {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             File fileDB = new File(classLoader.getResource("tables.sql").getFile());
-            File fileDemoData = new File(classLoader.getResource("data.sql").getFile());
-            DBUtils.executeSQLfile(fileDB, DBConnections.getConnection());
-            DBUtils.executeSQLfile(fileDemoData, DBConnections.getConnection());
+//            File fileDemoData = new File(classLoader.getResource("data.sql").getFile());
+            DBService.executeSQLfile(fileDB, DBService.getInstance().getConnection());
+//            DBUtils.executeSQLfile(fileDemoData, DBService.getConnection());
         } catch (Exception e) {
             e.printStackTrace();
             throw new ServletException("Unable to initialize data base");

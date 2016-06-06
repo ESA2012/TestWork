@@ -1,6 +1,7 @@
 package esa2012.servlets;
 
 import esa2012.service.Service;
+import esa2012.service.datatransport.EmployeeForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +20,6 @@ public class EmpListServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
 
-//        Service service = (Service)getServletContext().getAttribute("service");
-
         Service service = Service.INSTANCE;
 
         String url = "/pages/emplist.jsp";
@@ -29,7 +28,7 @@ public class EmpListServlet extends HttpServlet {
         String toDelete = req.getParameter("del");
         String toUpdate = req.getParameter("edt");
 
-        int depId = Integer.valueOf(req.getParameter("dep"));
+        int depId = Integer.valueOf(depIdStr);
         req.setAttribute("depobj", service.getDepartment(depId));
 
         if (toDelete!=null) {
@@ -41,7 +40,7 @@ public class EmpListServlet extends HttpServlet {
         if (toUpdate!=null) {
             int id = Integer.valueOf(toUpdate);
             if (id > 0) {
-                req.setAttribute("empobj", service.getEmployee(id));
+                req.setAttribute("empobj", new EmployeeForm(service.getEmployee(id)));
             }
             url = "/pages/empedit.jsp";
         }

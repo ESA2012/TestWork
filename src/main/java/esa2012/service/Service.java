@@ -7,20 +7,16 @@ import esa2012.datalayer.EmployeeDAOImpl;
 import esa2012.datalayer.interfaces.DAOException;
 import esa2012.datalayer.interfaces.DepartmentDAO;
 import esa2012.datalayer.interfaces.EmployeeDAO;
-import esa2012.service.datatransport.DepartmentDTO;
-import esa2012.service.datatransport.EmployeeDTO;
 import esa2012.service.datatransport.ErrorMessages;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,11 +26,9 @@ public class Service {
     private DepartmentDAO departmentDAO;
     private EmployeeDAO employeeDAO;
 
-    private final static Logger logger = LogManager.getLogger(Service.class);
+    private final static Logger logger = LogManager.getLogger("TestWork app");
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-
-    private static Service instance;
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     private Service() {
         departmentDAO = new DepartmentDAOImpl();
@@ -46,21 +40,15 @@ public class Service {
 
 
     /**
-     * Return list of departments dto
-     * @return  list of departments dto or null is exception
+     * Returns list of departments
+     * @return  list of departments
      */
-    public List<DepartmentDTO> getDepartments() {
-        List<DepartmentDTO> dtoList;
+    public List<Department> getDepartments() {
         try {
-            dtoList = new LinkedList<>();
-            List<Department> departments = departmentDAO.getAll(false);
-            for(Department d: departments) {
-                dtoList.add(convertToDTO(d));
-            }
-            return dtoList;
+            return departmentDAO.getAll(false);
         } catch (DAOException e) {
             logger.error(e.getMessage());
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -81,9 +69,9 @@ public class Service {
      * @param id    Departments id
      * @return      new Department object or null
      */
-    public DepartmentDTO getDepartment(Integer id) {
+    public Department getDepartment(Integer id) {
         try {
-            return convertToDTO(departmentDAO.getById(id, false));
+            return departmentDAO.getById(id, false);
         } catch (DAOException e) {
             logger.error(e.getMessage());
             return null;
@@ -91,24 +79,24 @@ public class Service {
     }
 
     /**
-     * Converts Department DTO to Department object and insert it to Data base
-     * @param departmentDTO     Department Data Transport Object
+     * Insert Department to Data base
+     * @param department     Department Data Transport Object
      */
-    public void addDepartment(DepartmentDTO departmentDTO) {
+    public void addDepartment(Department department) {
         try {
-            departmentDAO.add(convertFromDTO(departmentDTO));
+            departmentDAO.add(department);
         } catch (DAOException e) {
             logger.error(e.getMessage());
         }
     }
 
     /**
-     * Converts Department DTO to Department object and update it in Data base
-     * @param departmentDTO     Department Data Transport Object
+     * Update Department in Data base
+     * @param department    Department
      */
-    public void updateDepartment(DepartmentDTO departmentDTO) {
+    public void updateDepartment(Department department) {
         try {
-            departmentDAO.update(convertFromDTO(departmentDTO));
+            departmentDAO.update(department);
          } catch (DAOException e) {
             logger.error(e.getMessage());
         }
@@ -120,18 +108,12 @@ public class Service {
      * @param departmentId  department id
      * @return              list of employee objects
      */
-    public List<EmployeeDTO> getEmployeesByDep(Integer departmentId) {
-        List<EmployeeDTO> dtoList;
+    public List<Employee> getEmployeesByDep(Integer departmentId) {
         try {
-            List<Employee> employees = employeeDAO.getByDepartmentId(departmentId);
-            dtoList = new LinkedList<>();
-            for (Employee e: employees) {
-                dtoList.add(convertToDTO(e));
-            }
-            return dtoList;
+            return employeeDAO.getByDepartmentId(departmentId);
         } catch (DAOException e) {
             logger.error(e.getMessage());
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -141,9 +123,9 @@ public class Service {
      * @param id    employee id
      * @return      employee object
      */
-    public EmployeeDTO getEmployee(Integer id) {
+    public Employee getEmployee(Integer id) {
         try {
-            return convertToDTO(employeeDAO.getById(id));
+            return employeeDAO.getById(id);
         } catch (DAOException e) {
             logger.error(e.getMessage());
             return null;
@@ -166,10 +148,9 @@ public class Service {
 
     /**
      * Converts Employee Data Transport Object to Employee object and insert it to Data base
-     * @param employeeDTO     Employee Data Transport Object
+     * @param employee     Employee Data Transport Object
      */
-    public void addEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = convertFromDTO(employeeDTO);
+    public void addEmployee(Employee employee) {
         try {
             employeeDAO.add(employee);
         } catch (DAOException e) {
@@ -180,11 +161,10 @@ public class Service {
 
 
     /**
-     * Converts Employee Data Transport Object to Employee object and update it in Data base
-     * @param employeeDTO     Employee Data Transport Object
+     * Update it in Data base
+     * @param employee     Employee Data Transport Object
      */
-    public void updateEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = convertFromDTO(employeeDTO);
+    public void updateEmployee(Employee employee) {
         try {
             employeeDAO.update(employee);
         } catch (DAOException e) {
@@ -202,82 +182,8 @@ public class Service {
             return employeeDAO.getEmails();
         } catch (DAOException e) {
             logger.error(e.getMessage());
-            return null;
+            return Collections.emptyList();
         }
-    }
-
-
-    /**
-     * Converts Employee Data Transport Object to Employee Object
-     * @param employeeDTO   Employee Data Transport Object
-     * @return              Employee Object
-     */
-    private Employee convertFromDTO(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee();
-        Integer id = employeeDTO.getId() != null? employeeDTO.getId() : null;
-        employee.setId(id);
-        employee.setDepId(employeeDTO.getDepId());
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setLastName(employeeDTO.getLastName());
-        employee.setEmail(employeeDTO.getEmail());
-        employee.setPosition(employeeDTO.getPosition());
-        if (employeeDTO.getSalary() != null && !employeeDTO.getSalary().equals("")) {
-            employee.setSalary(new BigDecimal(employeeDTO.getSalary()));
-        }
-        if (employeeDTO.getDateOfBirth() != null && !employeeDTO.getDateOfBirth().equals("")) {
-            employee.setDateOfBirth(parseDate(employeeDTO.getDateOfBirth()));
-        }
-        return employee;
-    }
-
-
-    /**
-     * Converts Department Object to Department Data Transport Object
-     * @param department    Department Object
-     * @return              Department Data Transport Object
-     */
-    private DepartmentDTO convertToDTO(Department department) {
-        DepartmentDTO departmentDTO = new DepartmentDTO();
-        departmentDTO.setId(department.getId());
-        departmentDTO.setDepName(department.getDepName());
-        return departmentDTO;
-    }
-
-
-    /**
-     * Converts Department Data Transport Object to Department Object
-     * @param departmentDTO Department Data Transport Object
-     * @return              Department Object
-     */
-    private Department convertFromDTO(DepartmentDTO departmentDTO) {
-        Department department = new Department();
-        department.setId(departmentDTO.getId());
-        department.setDepName(departmentDTO.getDepName());
-        return department;
-    }
-
-
-
-    /**
-     * Converts Employee Object to Employee Data Transport Object
-     * @param employee  Employee Object
-     * @return          Employee Data Transport Object
-     */
-    private EmployeeDTO convertToDTO(Employee employee) {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setId(employee.getId());
-        employeeDTO.setDepId(employee.getDepId());
-        employeeDTO.setFirstName(employee.getFirstName());
-        employeeDTO.setLastName(employee.getLastName());
-        employeeDTO.setPosition(employee.getPosition());
-        if (employee.getSalary()!=null) {
-            employeeDTO.setSalary(employee.getSalary().toString());
-        }
-        if (employee.getDateOfBirth()!=null) {
-            employeeDTO.setDateOfBirth(simpleDateFormat.format(employee.getDateOfBirth()));
-        }
-        employeeDTO.setEmail(employee.getEmail());
-        return employeeDTO;
     }
 
 
@@ -286,13 +192,18 @@ public class Service {
      * @param strDate   date string format YYYY-MM-DD
      * @return          date object
      */
-    private Date parseDate(String strDate) {
+    public static Date parseDate(String strDate) {
         try {
             return simpleDateFormat.parse(strDate);
         } catch (ParseException e) {
             logger.error(e.getMessage());
             return null;
         }
+    }
+
+
+    public static String formatDate(Date date) {
+        return simpleDateFormat.format(date);
     }
 
 
