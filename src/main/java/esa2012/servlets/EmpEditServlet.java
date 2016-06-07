@@ -1,8 +1,8 @@
 package esa2012.servlets;
 
+import esa2012.service.Service;
 import esa2012.service.datatransport.EmployeeForm;
 import esa2012.service.datatransport.ErrorMessages;
-import esa2012.service.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by snake on 05.06.16.
+ * Servlet-controller for adding and updating Employee info
+ * Created by ESA2012 on 05.06.16.
  */
 public class EmpEditServlet extends HttpServlet {
 

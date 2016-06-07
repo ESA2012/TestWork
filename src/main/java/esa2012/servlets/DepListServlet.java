@@ -1,6 +1,5 @@
 package esa2012.servlets;
 
-import esa2012.datalayer.DBService;
 import esa2012.service.Service;
 
 import javax.servlet.ServletConfig;
@@ -8,11 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by snake on 04.06.16.
+ * Servlet-controller for viewing list of Departments and delete Department
+ * Created by ESA2012 on 05.06.16.
  */
 public class DepListServlet extends HttpServlet {
 
@@ -23,6 +22,9 @@ public class DepListServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
 
         Service service = Service.INSTANCE;
+
+        req.getSession(true).getId();
+
 
         String url = "/pages/deplist.jsp";
 
@@ -63,16 +65,7 @@ public class DepListServlet extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            File fileDB = new File(classLoader.getResource("tables.sql").getFile());
-//            File fileDemoData = new File(classLoader.getResource("data.sql").getFile());
-            DBService.executeSQLfile(fileDB, DBService.getInstance().getConnection());
-//            DBUtils.executeSQLfile(fileDemoData, DBService.getConnection());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServletException("Unable to initialize data base");
-        }
+
 
     }
 

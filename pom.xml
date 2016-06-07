@@ -73,8 +73,8 @@
                 <configuration>
                     <url>http://localhost:8080/manager/text</url>
                     <server>Tomcat 8</server>
-                    <!--<username>maven-admin</username>-->
-                    <!--<password>1234</password>-->
+                    <!--<username> </username>-->
+                    <!--<password> </password>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -85,21 +85,6 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-resources-plugin</artifactId>-->
-                <!--<version>2.6</version>-->
-                <!--<configuration>-->
-                    <!--<outputDirectory>${project.build.directory}/${artifactId}/META-INF</outputDirectory>-->
-                    <!--<includeEmptyDirs>true</includeEmptyDirs>-->
-                    <!--<resources>-->
-                        <!--<resource>-->
-                            <!--<directory>${project.basedir}/src/main/resources/log4j2.xml</directory>-->
-                            <!--<filtering>false</filtering>-->
-                        <!--</resource>-->
-                    <!--</resources>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 </project>

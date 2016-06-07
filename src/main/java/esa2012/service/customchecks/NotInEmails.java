@@ -1,7 +1,7 @@
 package esa2012.service.customchecks;
 
 /**
- * Created by snake on 04.06.16.
+ * Created by ESA2012 on 04.06.16.
  */
 
 import net.sf.oval.configuration.annotation.Constraint;

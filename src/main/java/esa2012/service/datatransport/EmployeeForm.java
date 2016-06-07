@@ -3,7 +3,10 @@ package esa2012.service.datatransport;
 import esa2012.model.Employee;
 import esa2012.service.Service;
 import esa2012.service.customchecks.NotInEmails;
-import net.sf.oval.constraint.*;
+import net.sf.oval.constraint.Email;
+import net.sf.oval.constraint.Length;
+import net.sf.oval.constraint.MatchPattern;
+import net.sf.oval.constraint.NotBlank;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,7 +25,7 @@ public class EmployeeForm implements Serializable {
 
     private String position;
 
-    @MatchPattern(pattern = "(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.((19|20)\\d\\d)|^$", message = "Incorrect date format. Must be YYYY-MM-DD")
+    @MatchPattern(pattern = "(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[012])\\.((19|20)\\d\\d)|^$", message = "Incorrect date format. Must be DD.MM.YYYY")
     private String dateOfBirth;
 
     @Email(message = "Not valid e-mail")
@@ -48,7 +51,7 @@ public class EmployeeForm implements Serializable {
             this.salary = employee.getSalary().toString();
         }
         if (employee.getDateOfBirth()!=null) {
-            this.dateOfBirth = Service.formatDate(employee.getDateOfBirth());
+            this.dateOfBirth = Service.INSTANCE.formatDate(employee.getDateOfBirth());
         }
         this.email = employee.getEmail();
     }
@@ -65,7 +68,7 @@ public class EmployeeForm implements Serializable {
             employee.setSalary(new BigDecimal(salary));
         }
         if (dateOfBirth!= null && !"".equals(dateOfBirth)) {
-            employee.setDateOfBirth(Service.parseDate(dateOfBirth));
+            employee.setDateOfBirth(Service.INSTANCE.parseDate(dateOfBirth));
         }
         return employee;
     }

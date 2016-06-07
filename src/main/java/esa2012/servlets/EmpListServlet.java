@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by snake on 05.06.16.
+ * Servlet-controller for viewing list of Employees and delete Employee
+ * Created by ESA2012 on 05.06.16.
  */
 public class EmpListServlet extends HttpServlet {
 

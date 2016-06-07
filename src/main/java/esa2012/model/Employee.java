@@ -20,16 +20,6 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(Integer depId, String firstName, String lastName, String position, Date dateOfBirth, String email, BigDecimal salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.salary = salary;
-        this.depId = depId;
-    }
-
     public Integer getDepId() {
         return depId;
     }

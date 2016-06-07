@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dialog.css">
 </head>
 <body>
-
 <div class="main" style="width: 600px;">
   <table border="1">
     <caption>Departments</caption>

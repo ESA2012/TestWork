@@ -1,4 +1,4 @@
-package esa2012.datalayer;
+package esa2012.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,17 +44,25 @@ public class DBService {
     }
 
 
-    public Connection getConnection() throws SQLException {
+    public synchronized Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
 
-    public static void close(Statement statement, ResultSet resultSet) throws SQLException {
-        if (resultSet !=null && !resultSet.isClosed()) {
-            resultSet.close();
+    public static void close(Statement statement, ResultSet resultSet) {
+        try {
+            if (resultSet !=null && !resultSet.isClosed()) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            logger.error("Unable to close result set. "+e.getMessage());
         }
-        if (statement != null && !statement.isClosed()) {
-            statement.close();
+        try {
+            if (statement != null && !statement.isClosed()) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            logger.error("Unable to close statement. "+e.getMessage());
         }
     }
 
@@ -82,7 +90,6 @@ public class DBService {
             }
         }
         close(statement, null);
-        close(connection);
     }
 
 }
