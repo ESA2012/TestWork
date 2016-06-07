@@ -2,7 +2,6 @@ package esa2012.servlets;
 
 import esa2012.service.Service;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet-controller for viewing list of Departments and delete Department
+ * Servlet-controller for delete Department info
  * Created by ESA2012 on 05.06.16.
  */
 public class DepListServlet extends HttpServlet {
@@ -60,13 +59,6 @@ public class DepListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
-    }
-
-
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-
-
     }
 
 }

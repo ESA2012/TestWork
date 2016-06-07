@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Created by snake on 28.05.16.
+ * Created by ESA2012 on 28.05.16.
  */
 public class Employee implements Serializable {
     private Integer id;
