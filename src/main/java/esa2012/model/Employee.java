@@ -3,6 +3,7 @@ package esa2012.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by snake on 28.05.16.
@@ -89,27 +90,18 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        if (!id.equals(employee.id)) return false;
-        if (!firstName.equals(employee.firstName)) return false;
-        if (!lastName.equals(employee.lastName)) return false;
-        if (!position.equals(employee.position)) return false;
-        if (!dateOfBirth.equals(employee.dateOfBirth)) return false;
-        if (!email.equals(employee.email)) return false;
-        if (!salary.equals(employee.salary)) return false;
-        return depId.equals(employee.depId);
-
+        return Objects.equals(id, employee.id) &&
+                Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(lastName, employee.lastName) &&
+                Objects.equals(position, employee.position) &&
+                Objects.equals(dateOfBirth, employee.dateOfBirth) &&
+                Objects.equals(email, employee.email) &&
+                Objects.equals(salary, employee.salary) &&
+                Objects.equals(depId, employee.depId);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (salary != null ? salary.hashCode() : 0);
-        result = 31 * result + (depId != null ? depId.hashCode() : 0);
-        return result;
+        return Objects.hash(id, firstName, lastName, position, dateOfBirth, email, salary, depId);
     }
 }

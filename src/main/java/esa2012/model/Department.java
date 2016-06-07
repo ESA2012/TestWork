@@ -2,6 +2,7 @@ package esa2012.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class Department implements Serializable {
     private Integer id;
@@ -38,25 +39,15 @@ public class Department implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) {
-            return false;
-        } else if (getClass() != o.getClass()) {
-            Department other = (Department)o;
-            return (depName.equals(other.depName) &&
-                    id.equals(other.id) &&
-                    employees.equals(other.employees));
-        } else {
-            return false;
-        }
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(depName, that.depName) &&
+                Objects.equals(employees, that.employees);
     }
 
     @Override
     public int hashCode() {
-        int hash = 1;
-        hash = hash * 31 + id;
-        hash = hash * 31 + depName.hashCode();
-        hash = hash * 31 + employees.hashCode();
-        return hash;
+        return Objects.hash(id, depName, employees);
     }
-
 }
